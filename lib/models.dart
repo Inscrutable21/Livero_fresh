@@ -1,0 +1,60 @@
+import 'package:flutter/material.dart';
+
+class Variant {
+  final String label;
+  final int price;
+  final int mrp;
+  const Variant(this.label, this.price, this.mrp);
+}
+
+class Product {
+  final String id, name, unit, brand;
+  final int price, mrp, off, eta;
+  final Color color;
+  final IconData icon;
+  final List<Variant>? variants;
+  const Product({
+    required this.id,
+    required this.name,
+    required this.unit,
+    required this.brand,
+    required this.price,
+    required this.mrp,
+    required this.off,
+    required this.eta,
+    required this.color,
+    required this.icon,
+    this.variants,
+  });
+}
+
+final List<Product> products = [
+  Product(id: 'carrot', name: 'Carrot — Ooty', unit: '500 g', price: 20, mrp: 48, off: 58, brand: 'Livero Fresh Farms', eta: 9, color: const Color(0xFFFFF1E3), icon: Icons.eco),
+  Product(id: 'ginger', name: 'Ginger', unit: '250 g', price: 25, mrp: 62, off: 60, brand: 'Livero Fresh Farms', eta: 9, color: const Color(0xFFF8F1E3), icon: Icons.grass),
+  Product(id: 'potato', name: 'Potato — New', unit: '1 kg', price: 10, mrp: 27, off: 63, brand: 'Livero Fresh Farms', eta: 9, color: const Color(0xFFF5F0E4), icon: Icons.circle),
+  Product(id: 'tomato', name: 'Tomato — Local', unit: '500 g', price: 16, mrp: 42, off: 62, brand: 'Livero Fresh Farms', eta: 9, color: const Color(0xFFFDEDEA), icon: Icons.circle),
+  Product(id: 'onion', name: 'Onion', unit: '1 kg', price: 32, mrp: 60, off: 47, brand: 'Livero Fresh Farms', eta: 11, color: const Color(0xFFF7EFF7), icon: Icons.circle),
+  Product(id: 'banana', name: 'Banana — Robusta', unit: '6 pcs', price: 44, mrp: 58, off: 24, brand: 'Livero Fresh Farms', eta: 9, color: const Color(0xFFFFF8DC), icon: Icons.eco),
+  Product(id: 'spinach', name: 'Palak — Bunch', unit: '250 g', price: 18, mrp: 30, off: 40, brand: 'Livero Fresh Farms', eta: 11, color: const Color(0xFFEDF7EC), icon: Icons.eco),
+  Product(id: 'capsicum', name: 'Capsicum — Green', unit: '250 g', price: 24, mrp: 45, off: 46, brand: 'Livero Fresh Farms', eta: 9, color: const Color(0xFFEEF6EA), icon: Icons.eco),
+  Product(id: 'atta', name: 'Aashirvaad Atta', unit: '5 kg', price: 279, mrp: 340, off: 18, brand: 'Aashirvaad', eta: 12, color: const Color(0xFFF4E8D7), icon: Icons.grain, variants: [Variant('10 kg', 520, 680), Variant('5 kg', 279, 340)]),
+  Product(id: 'oil', name: 'Sunlite Refined Oil', unit: '1 L', price: 145, mrp: 190, off: 24, brand: 'Fortune', eta: 12, color: const Color(0xFFFFF5DA), icon: Icons.opacity, variants: [Variant('2 L', 270, 380), Variant('1 L', 145, 190)]),
+  Product(id: 'tea', name: 'Premium Leaf Tea', unit: '1 kg', price: 520, mrp: 610, off: 15, brand: 'Tata Tea', eta: 12, color: const Color(0xFFF7E4DA), icon: Icons.emoji_food_beverage, variants: [Variant('1.5 kg', 730, 915), Variant('1 kg', 520, 610)]),
+  Product(id: 'milk', name: 'Toned Milk', unit: '500 ml', price: 28, mrp: 32, off: 12, brand: 'Amul', eta: 9, color: const Color(0xFFEBF3FF), icon: Icons.local_drink),
+  Product(id: 'detergent', name: 'Matic Top Load Liquid', unit: '1 kg', price: 132, mrp: 160, off: 18, brand: 'Surf Excel', eta: 14, color: const Color(0xFFE7F0FA), icon: Icons.local_laundry_service, variants: [Variant('2 kg', 245, 320), Variant('1 kg', 132, 160)]),
+  Product(id: 'cream', name: 'Beauty Cream', unit: '200 ml', price: 210, mrp: 260, off: 19, brand: 'Dove', eta: 14, color: const Color(0xFFF4EFF8), icon: Icons.spa),
+  Product(id: 'bread', name: 'Whole Wheat Bread', unit: '400 g', price: 45, mrp: 55, off: 18, brand: 'Britannia', eta: 9, color: const Color(0xFFFAF0E1), icon: Icons.bakery_dining),
+  Product(id: 'rice', name: 'Sona Masoori Rice', unit: '5 kg', price: 399, mrp: 475, off: 16, brand: 'Livero Fresh Select', eta: 14, color: const Color(0xFFF6F1E2), icon: Icons.rice_bowl, variants: [Variant('10 kg', 749, 950), Variant('5 kg', 399, 475)]),
+];
+
+Product byId(String id) => products.firstWhere((p) => p.id == id);
+
+const Map<String, List<String>> subsets = {
+  'All': ['tomato', 'carrot', 'potato', 'onion', 'spinach', 'capsicum', 'banana', 'ginger'],
+  'Fresh vegetables': ['tomato', 'potato', 'onion', 'capsicum', 'carrot'],
+  'Fresh fruits': ['banana'],
+  'Herbs & seasoning': ['ginger', 'spinach'],
+  'Exotics': ['capsicum', 'banana', 'ginger'],
+  'Cuts & sprouts': ['spinach', 'carrot', 'capsicum'],
+  'Organics': ['spinach', 'tomato', 'carrot', 'ginger'],
+};
