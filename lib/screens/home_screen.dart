@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models.dart';
@@ -31,19 +32,38 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = context.select<AppState, CatTheme>((s) => s.theme);
     final accent = context.select<AppState, Color>((s) => s.accent);
+    final selectedAddressLine = context.select<AppState, String>((s) => s.selectedAddress.line);
+    final currentTab = context.select<AppState, String>((s) => s.tab);
     final app = context.read<AppState>();
+    final topPadding = MediaQuery.paddingOf(context).top;
+
     return AnimatedContainer(
       duration: const Duration(milliseconds: 350),
       curve: Curves.easeInOutCubic,
       color: theme.solid,
-      child: Column(children: [
-        _HomeHeader(theme: theme, accent: accent),
-        Expanded(
-          child: Stack(
-            children: [
-              BottomNavScrollListener(
-                child: ListView(padding: EdgeInsets.only(bottom: 104 + MediaQuery.paddingOf(context).bottom), children: [
-          const SizedBox(height: 14),
+      child: Stack(
+        children: [
+          BottomNavScrollListener(
+            child: CustomScrollView(
+              slivers: [
+                SliverPersistentHeader(
+                  pinned: true,
+                  delegate: _HomeHeaderDelegate(
+                    theme: theme,
+                    accent: accent,
+                    selectedAddressLine: selectedAddressLine,
+                    currentTab: currentTab,
+                    topPadding: topPadding,
+                    app: app,
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: 104 + MediaQuery.paddingOf(context).bottom),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 14),
           Padding(padding: const EdgeInsets.symmetric(horizontal: 16), child: AnimatedContainer(
             duration: const Duration(milliseconds: 350),
             curve: Curves.easeInOutCubic,
@@ -119,10 +139,10 @@ class HomeScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 14),
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Padding(padding: const EdgeInsets.symmetric(horizontal: 14), child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  const Text('Best deals for you', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: Color(0xFF12261C))),
-                  const SizedBox(height: 3),
-                  const Text('Fresh picks, up to 65% off · ends 9 pm', style: TextStyle(fontSize: 10.5, color: Color(0x8012261C))),
+                const Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Text('Best deals for you', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: Color(0xFF12261C))),
+                  SizedBox(height: 3),
+                  Text('Fresh picks, up to 65% off · ends 9 pm', style: TextStyle(fontSize: 10.5, color: Color(0x8012261C))),
                 ])),
                 AnimatedDefaultTextStyle(
                   duration: const Duration(milliseconds: 350),
@@ -172,18 +192,21 @@ class HomeScreen extends StatelessWidget {
             spacing: 8,
           ),
           const SizedBox(height: 22),
-                ]),
-              ),
-              const Positioned(
-                left: 0,
-                right: 0,
-                bottom: 0,
-                child: BottomNav(),
-              ),
-            ],
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      ]),
+          const Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: BottomNav(),
+          ),
+        ],
+      ),
     );
   }
 
@@ -218,123 +241,293 @@ class HomeScreen extends StatelessWidget {
   );
 }
 
-class _HomeHeader extends StatelessWidget {
+class _HomeHeaderDelegate extends SliverPersistentHeaderDelegate {
   final CatTheme theme;
   final Color accent;
-  const _HomeHeader({required this.theme, required this.accent});
+  final String selectedAddressLine;
+  final String currentTab;
+  final double topPadding;
+  final AppState app;
+
+  _HomeHeaderDelegate({
+    required this.theme,
+    required this.accent,
+    required this.selectedAddressLine,
+    required this.currentTab,
+    required this.topPadding,
+    required this.app,
+  });
+
+  static const double _topSectionHeight = 166.0;
+  static const double _tabsHeight = 78.0;
+  static const double _bottomGap = 6.0;
 
   @override
-  Widget build(BuildContext context) {
-    final addressVisible = context.select<AppState, bool>((s) => s.addressVisible);
-    final selectedAddressLine = context.select<AppState, String>((s) => s.selectedAddress.line);
-    final currentTab = context.select<AppState, String>((s) => s.tab);
-    final app = context.read<AppState>();
+  double get maxExtent => topPadding + _topSectionHeight + _tabsHeight + _bottomGap;
 
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 350),
-      curve: Curves.easeInOutCubic,
-      padding: EdgeInsets.fromLTRB(16, addressVisible ? 16 : 8, 16, addressVisible ? 12 : 8),
-      decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: theme.headerGradient)),
-      child: SafeArea(bottom: false, child: Column(mainAxisSize: MainAxisSize.min, children: [
-        AnimatedCrossFade(
-          firstChild: SingleChildScrollView(
-            physics: const NeverScrollableScrollPhysics(),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
-                    child: Image.asset(
-                      'assests/1.png',
-                      height: 40,
-                      cacheHeight: 120,
-                      fit: BoxFit.contain,
-                    ),
+  @override
+  double get minExtent => topPadding + _tabsHeight + _bottomGap;
+
+  @override
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    final clampedShrink = math.max(0.0, math.min(shrinkOffset, _topSectionHeight));
+    final topOpacity = (1.0 - (clampedShrink / (_topSectionHeight * 0.75))).clamp(0.0, 1.0);
+    final isPinned = shrinkOffset >= _topSectionHeight;
+
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: theme.headerGradient,
+        ),
+        boxShadow: isPinned || overlapsContent
+            ? [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.07),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ]
+            : null,
+      ),
+      child: ClipRect(
+        child: Stack(
+          clipBehavior: Clip.hardEdge,
+          children: [
+            Positioned(
+              top: topPadding + 10 - clampedShrink,
+              left: 16,
+              right: 16,
+              child: IgnorePointer(
+                ignoring: topOpacity < 0.2,
+                child: Opacity(
+                  opacity: topOpacity,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: Image.asset(
+                            'assests/1.png',
+                            height: 40,
+                            cacheHeight: 120,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () => showLocationSheet(context),
+                              child: Row(
+                                children: [
+                                  TweenAnimationBuilder<Color?>(
+                                    tween: ColorTween(end: accent),
+                                    duration: const Duration(milliseconds: 350),
+                                    curve: Curves.easeInOutCubic,
+                                    builder: (_, color, __) => Icon(
+                                      Icons.location_on_outlined,
+                                      size: 20,
+                                      color: color,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'DELIVERING TO',
+                                          style: TextStyle(
+                                            fontSize: 10.5,
+                                            letterSpacing: .5,
+                                            color: Colors.black.withOpacity(.55),
+                                          ),
+                                        ),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                selectedAddressLine,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                  fontSize: 14.5,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Color(0xFF12261C),
+                                                ),
+                                              ),
+                                            ),
+                                            const Icon(
+                                              Icons.keyboard_arrow_down,
+                                              size: 16,
+                                              color: Color(0xFF12261C),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Container(
+                            width: 38,
+                            height: 38,
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.person_outline,
+                              size: 19,
+                              color: Color(0xFF12261C),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              height: 46,
+                              padding: const EdgeInsets.symmetric(horizontal: 12),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(13),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Color(0x12122612),
+                                    blurRadius: 10,
+                                    offset: Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              child: const Row(
+                                children: [
+                                  Icon(Icons.search, size: 18, color: Color(0xFF4C6157)),
+                                  SizedBox(width: 9),
+                                  Expanded(
+                                    child: Text(
+                                      "Search for 'milk'",
+                                      style: TextStyle(
+                                        fontSize: 13.5,
+                                        color: Color(0x6B12261C),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 9),
+                          HomeScreen._iconBtn(Icons.receipt_long_outlined),
+                          const SizedBox(width: 9),
+                          HomeScreen._iconBtn(Icons.favorite_border),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-                Row(children: [
-                  Expanded(child: GestureDetector(
-                    onTap: () => showLocationSheet(context),
-                    child: Row(children: [
-                      TweenAnimationBuilder<Color?>(
-                        tween: ColorTween(end: accent),
-                        duration: const Duration(milliseconds: 350),
-                        curve: Curves.easeInOutCubic,
-                        builder: (_, color, __) => Icon(Icons.location_on_outlined, size: 20, color: color),
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                        Text('DELIVERING TO', style: TextStyle(fontSize: 10.5, letterSpacing: .5, color: Colors.black.withOpacity(.55))),
-                        Row(children: [
-                          Expanded(child: Text(selectedAddressLine, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 14.5, fontWeight: FontWeight.w600, color: Color(0xFF12261C)))),
-                          const Icon(Icons.keyboard_arrow_down, size: 16, color: Color(0xFF12261C)),
-                        ]),
-                      ])),
-                    ]),
-                  )),
-                  const SizedBox(width: 8),
-                  Container(width: 38, height: 38, decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle), child: const Icon(Icons.person_outline, size: 19, color: Color(0xFF12261C))),
-                ]),
-                const SizedBox(height: 12),
-                Row(children: [
-                  Expanded(child: Container(height: 46, padding: const EdgeInsets.symmetric(horizontal: 12), decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(13), boxShadow: const [BoxShadow(color: Color(0x12122612), blurRadius: 10, offset: Offset(0, 2))]), child: const Row(children: [Icon(Icons.search, size: 18, color: Color(0xFF4C6157)), SizedBox(width: 9), Expanded(child: Text("Search for 'milk'", style: TextStyle(fontSize: 13.5, color: Color(0x6B12261C))))]))),
-                  const SizedBox(width: 9),
-                  HomeScreen._iconBtn(Icons.receipt_long_outlined),
-                  const SizedBox(width: 9),
-                  HomeScreen._iconBtn(Icons.favorite_border),
-                ]),
-                const SizedBox(height: 12),
-              ],
+              ),
             ),
-          ),
-          secondChild: const SizedBox(width: double.infinity, height: 0),
-          crossFadeState: addressVisible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-          duration: const Duration(milliseconds: 260),
-          sizeCurve: Curves.easeInOutCubic,
-        ),
-        SizedBox(height: 78, child: ListView.builder(scrollDirection: Axis.horizontal, itemCount: HomeScreen.tabDefs.length, itemBuilder: (_, i) {
-          final name = HomeScreen.tabDefs[i][0] as String, icon = HomeScreen.tabDefs[i][1] as IconData;
-          final on = currentTab == name;
-          return GestureDetector(
-            onTap: () => app.setTab(name),
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 350),
-              curve: Curves.easeInOutCubic,
-              width: 74, margin: const EdgeInsets.only(right: 8),
-              decoration: BoxDecoration(border: Border(bottom: BorderSide(color: on ? accent : Colors.transparent, width: 2.5))),
-              child: Column(children: [
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 350),
-                  curve: Curves.easeInOutCubic,
-                  height: 44,
-                  decoration: BoxDecoration(
-                    color: on ? theme.tint : Colors.white,
-                    borderRadius: BorderRadius.circular(13),
-                    boxShadow: on ? [BoxShadow(color: accent.withOpacity(0.18), blurRadius: 8, offset: const Offset(0, 3))] : const [],
-                  ),
-                  child: Center(
-                    child: TweenAnimationBuilder<Color?>(
-                      tween: ColorTween(end: on ? accent : const Color(0xFF4C6157)),
+            Positioned(
+              top: math.max(
+                topPadding,
+                topPadding + _topSectionHeight - clampedShrink,
+              ),
+              left: 0,
+              right: 0,
+              height: _tabsHeight,
+              child: ListView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                scrollDirection: Axis.horizontal,
+                itemCount: HomeScreen.tabDefs.length,
+                itemBuilder: (_, i) {
+                  final name = HomeScreen.tabDefs[i][0] as String;
+                  final icon = HomeScreen.tabDefs[i][1] as IconData;
+                  final on = currentTab == name;
+                  return GestureDetector(
+                    onTap: () => app.setTab(name),
+                    child: AnimatedContainer(
                       duration: const Duration(milliseconds: 350),
                       curve: Curves.easeInOutCubic,
-                      builder: (_, color, __) => Icon(icon, color: color),
+                      width: 74,
+                      margin: const EdgeInsets.only(right: 8),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: on ? accent : Colors.transparent,
+                            width: 2.5,
+                          ),
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          AnimatedContainer(
+                            duration: const Duration(milliseconds: 350),
+                            curve: Curves.easeInOutCubic,
+                            height: 44,
+                            decoration: BoxDecoration(
+                              color: on ? theme.tint : Colors.white,
+                              borderRadius: BorderRadius.circular(13),
+                              boxShadow: on
+                                  ? [
+                                      BoxShadow(
+                                        color: accent.withOpacity(0.18),
+                                        blurRadius: 8,
+                                        offset: const Offset(0, 3),
+                                      ),
+                                    ]
+                                  : const [],
+                            ),
+                            child: Center(
+                              child: TweenAnimationBuilder<Color?>(
+                                tween: ColorTween(
+                                  end: on ? accent : const Color(0xFF4C6157),
+                                ),
+                                duration: const Duration(milliseconds: 350),
+                                curve: Curves.easeInOutCubic,
+                                builder: (_, color, __) => Icon(icon, color: color),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+                          AnimatedDefaultTextStyle(
+                            duration: const Duration(milliseconds: 350),
+                            curve: Curves.easeInOutCubic,
+                            style: TextStyle(
+                              fontSize: 11,
+                              color: on ? accent : const Color(0x9912261C),
+                              fontWeight: on ? FontWeight.w600 : FontWeight.w400,
+                            ),
+                            child: Text(name),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ),
-                const SizedBox(height: 6),
-                AnimatedDefaultTextStyle(
-                  duration: const Duration(milliseconds: 350),
-                  curve: Curves.easeInOutCubic,
-                  style: TextStyle(fontSize: 11, color: on ? accent : const Color(0x9912261C), fontWeight: on ? FontWeight.w600 : FontWeight.w400),
-                  child: Text(name),
-                ),
-              ]),
+                  );
+                },
+              ),
             ),
-          );
-        })),
-      ])),
+          ],
+        ),
+      ),
     );
+  }
+
+  @override
+  bool shouldRebuild(covariant _HomeHeaderDelegate oldDelegate) {
+    return oldDelegate.theme != theme ||
+        oldDelegate.accent != accent ||
+        oldDelegate.selectedAddressLine != selectedAddressLine ||
+        oldDelegate.currentTab != currentTab ||
+        oldDelegate.topPadding != topPadding;
   }
 }
 

@@ -123,12 +123,6 @@ class BottomNavScrollListener extends StatelessWidget {
       onNotification: (notification) {
         if (notification.metrics.axis != Axis.vertical) return false;
 
-        // Address bar visibility: only show when at or very close to the top
-        if (notification.metrics.pixels <= 15) {
-          app.setAddressVisible(true);
-        } else {
-          app.setAddressVisible(false);
-        }
 
         // Guarantee visibility when at or pulled beyond the top
         if (notification.metrics.pixels <= 0) {
