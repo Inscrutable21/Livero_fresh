@@ -11,8 +11,8 @@ class BottomNav extends StatelessWidget {
     final isVisible = context.select<AppState, bool>((s) => s.navVisible);
     final accent = context.select<AppState, Color>((s) => s.accent);
     final currentScreen = context.select<AppState, Screen>((s) => s.screen);
-    final cartCount = context.select<AppState, int>((s) => s.cartCount);
     final app = context.read<AppState>();
+
     final bottomInset = MediaQuery.paddingOf(context).bottom;
 
     return AnimatedSlide(
@@ -34,7 +34,7 @@ class BottomNav extends StatelessWidget {
               _navItem(context, 'Today', Icons.grid_view_rounded, currentScreen == Screen.home, accent, () => app.setScreen(Screen.home)),
               _navItem(context, 'Aisles', Icons.apps_rounded, currentScreen == Screen.list, accent, () => app.setScreen(Screen.list)),
               _finds(context),
-              _navItem(context, 'Reorder', Icons.shopping_bag_outlined, false, accent, () {}, badge: cartCount > 0 ? cartCount : null),
+              _navItem(context, 'Reorder', Icons.shopping_bag_outlined, currentScreen == Screen.reorder, accent, () => app.setScreen(Screen.reorder)),
               _navItem(context, 'Profile', Icons.person_outline_rounded, currentScreen == Screen.account, accent, () => app.setScreen(Screen.account)),
             ]),
           ),

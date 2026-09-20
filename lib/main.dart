@@ -6,6 +6,7 @@ import 'screens/home_screen.dart';
 import 'screens/category_screen.dart';
 import 'screens/product_detail_screen.dart';
 import 'screens/account_screen.dart';
+import 'screens/reorder_screen.dart';
 
 void main() => runApp(const LiveroApp());
 
@@ -51,7 +52,11 @@ class RootShell extends StatelessWidget {
       case Screen.account:
         body = const AccountScreen();
         break;
+      case Screen.reorder:
+        body = const ReorderScreen();
+        break;
     }
     return Scaffold(body: SafeArea(top: false, bottom: false, child: body));
   }
 }
+

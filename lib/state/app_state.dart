@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import '../models.dart';
 import '../theme.dart';
 
-enum Screen {home, list, pdp, account }
+enum Screen { home, list, pdp, account, reorder }
+
 
 class Address {
   final String id;
