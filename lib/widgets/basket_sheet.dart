@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models.dart';
 import '../state/app_state.dart';
+import '../screens/cart_screen.dart';
 
 void showBasketSheet(BuildContext context) {
-  showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    backgroundColor: Colors.transparent,
-    builder: (ctx) => const _BasketSheet(),
+  Navigator.of(context).push(
+    MaterialPageRoute(
+      builder: (ctx) => const CartScreen(),
+    ),
   );
 }
+
 
 class _BasketSheet extends StatelessWidget {
   const _BasketSheet();

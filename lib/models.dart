@@ -45,9 +45,32 @@ final List<Product> products = [
   Product(id: 'cream', name: 'Beauty Cream', unit: '200 ml', price: 210, mrp: 260, off: 19, brand: 'Dove', eta: 14, color: const Color(0xFFF4EFF8), icon: Icons.spa),
   Product(id: 'bread', name: 'Whole Wheat Bread', unit: '400 g', price: 45, mrp: 55, off: 18, brand: 'Britannia', eta: 9, color: const Color(0xFFFAF0E1), icon: Icons.bakery_dining),
   Product(id: 'rice', name: 'Sona Masoori Rice', unit: '5 kg', price: 399, mrp: 475, off: 16, brand: 'Livero Fresh Select', eta: 14, color: const Color(0xFFF6F1E2), icon: Icons.rice_bowl, variants: [Variant('10 kg', 749, 950), Variant('5 kg', 399, 475)]),
+  // Cart & Deals items
+  Product(id: 'batter', name: "Member's Pick Idli & Dosa Batter", unit: '750 g', price: 59, mrp: 100, off: 41, brand: "Member's Pick", eta: 9, color: const Color(0xFFEFEFEF), icon: Icons.breakfast_dining),
+  Product(id: 'blueberry', name: 'Members pick Jumbo Blueberry', unit: '125 g', price: 199, mrp: 261, off: 24, brand: "Member's Pick", eta: 9, color: const Color(0xFFE8EEF8), icon: Icons.bubble_chart),
+  Product(id: 'royal_duo', name: 'Royal Duo (Pomegranate + Apple)', unit: '2 pcs', price: 0, mrp: 225, off: 100, brand: 'Livero Fresh', eta: 9, color: const Color(0xFFFDEDEA), icon: Icons.apple),
+  Product(id: 'taali', name: 'Digestive High Fibre Biscuits', unit: '100 g', price: 29, mrp: 35, off: 17, brand: 'TAALI', eta: 9, color: const Color(0xFFF3E5F5), icon: Icons.cookie),
+  Product(id: 'motichur', name: 'Motichur Laddu', unit: '200 g', price: 114, mrp: 180, off: 37, brand: 'SANGAM', eta: 9, color: const Color(0xFFFFF8E1), icon: Icons.cake),
+  Product(id: 'chocolate', name: 'Rum & Raisins 55% Dark Chocolate', unit: '30 g', price: 59, mrp: 89, off: 34, brand: 'MMMELT', eta: 9, color: const Color(0xFFEFEBE9), icon: Icons.takeout_dining),
+  Product(id: 'ghee_a2', name: 'GoSwasthya A2 Cow Ghee', unit: '150 ml', price: 99, mrp: 399, off: 75, brand: 'GoSwasthya', eta: 9, color: const Color(0xFFFFFDE7), icon: Icons.local_drink),
+  Product(id: 'incense', name: 'Art of Puja Rainforest Incense', unit: '10 Sticks', price: 59, mrp: 109, off: 46, brand: 'Art of Puja', eta: 9, color: const Color(0xFFE0F2F1), icon: Icons.spa),
 ];
 
-Product byId(String id) => products.firstWhere((p) => p.id == id);
+Product byId(String id) => products.firstWhere(
+  (p) => p.id == id,
+  orElse: () => Product(
+    id: id,
+    name: id,
+    unit: '1 pc',
+    price: 49,
+    mrp: 60,
+    off: 18,
+    brand: 'Livero Fresh',
+    eta: 9,
+    color: const Color(0xFFF2F2F2),
+    icon: Icons.shopping_basket_outlined,
+  ),
+);
 
 const Map<String, List<String>> subsets = {
   'All': ['tomato', 'carrot', 'potato', 'onion', 'spinach', 'capsicum', 'banana', 'ginger'],
@@ -58,3 +81,4 @@ const Map<String, List<String>> subsets = {
   'Cuts & sprouts': ['spinach', 'carrot', 'capsicum'],
   'Organics': ['spinach', 'tomato', 'carrot', 'ginger'],
 };
+
