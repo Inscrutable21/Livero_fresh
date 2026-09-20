@@ -154,8 +154,9 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: 13),
               const _ProductRow(
                 productIds: ['carrot', 'ginger', 'potato', 'tomato', 'spinach', 'capsicum'],
-                imageHeight: 74,
-                spacing: 8,
+                imageHeight: 80,
+                spacing: 10,
+                horizontalPadding: 14,
               ),
             ]),
           )),
@@ -188,8 +189,9 @@ class HomeScreen extends StatelessWidget {
           _sectionHeader('Bestsellers for you', accent),
           const _ProductRow(
             productIds: ['atta', 'oil', 'tea', 'detergent', 'cream', 'rice'],
-            imageHeight: 76,
-            spacing: 8,
+            imageHeight: 80,
+            spacing: 10,
+            horizontalPadding: 16,
           ),
           const SizedBox(height: 22),
                       ],
@@ -535,50 +537,41 @@ class _ProductRow extends StatelessWidget {
   final List<String> productIds;
   final double imageHeight;
   final double spacing;
+  final double horizontalPadding;
 
   const _ProductRow({
     required this.productIds,
-    this.imageHeight = 74,
-    this.spacing = 8,
+    this.imageHeight = 80,
+    this.spacing = 10,
+    this.horizontalPadding = 16,
   });
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final totalWidth = constraints.maxWidth;
-        // The user specifically requested 3 products in one frame.
-        // On very wide desktop displays (>= 768), show 4; on mobile/tablets, show exactly 3.
-        final int count = totalWidth >= 768 ? 4 : 3;
+    // Sized to match "Popular this week" cards (width: 132, spacing: 10)
+    const double cardWidth = 132.0;
+    final double itemExtent = cardWidth + spacing;
+    final double listHeight = imageHeight + 92.0;
 
-        // Exactly size each card so that count cards + all paddings & gaps = totalWidth.
-        // Formula: totalWidth = (count + 1) * spacing + count * cardWidth
-        // => cardWidth = (totalWidth - (count + 1) * spacing) / count
-        final double cardWidth = (totalWidth - ((count + 1) * spacing)) / count;
-        final double itemExtent = cardWidth + spacing;
-        final double listHeight = imageHeight + 116;
-
-        return SizedBox(
-          height: listHeight,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            physics: _SnapScrollPhysics(itemDimension: itemExtent),
-            padding: EdgeInsets.symmetric(horizontal: spacing),
-            itemCount: productIds.length,
-            itemBuilder: (context, i) {
-              final isLast = i == productIds.length - 1;
-              return Padding(
-                padding: EdgeInsets.only(right: isLast ? 0 : spacing),
-                child: ProductCard(
-                  product: byId(productIds[i]),
-                  width: cardWidth,
-                  imageHeight: imageHeight,
-                ),
-              );
-            },
-          ),
-        );
-      },
+    return SizedBox(
+      height: listHeight,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        physics: _SnapScrollPhysics(itemDimension: itemExtent),
+        padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+        itemCount: productIds.length,
+        itemBuilder: (context, i) {
+          final isLast = i == productIds.length - 1;
+          return Padding(
+            padding: EdgeInsets.only(right: isLast ? 0 : spacing),
+            child: ProductCard(
+              product: byId(productIds[i]),
+              width: cardWidth,
+              imageHeight: imageHeight,
+            ),
+          );
+        },
+      ),
     );
   }
 }

@@ -9,7 +9,7 @@ class ProductCard extends StatelessWidget {
   final double width;
   final double? height;
   final double imageHeight;
-  const ProductCard({super.key, required this.product, this.width = 134, this.height, this.imageHeight = 96});
+  const ProductCard({super.key, required this.product, this.width = 132, this.height, this.imageHeight = 80});
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +24,10 @@ class ProductCard extends StatelessWidget {
       child: Container(
         width: width,
         height: height,
-        padding: EdgeInsets.all(isCompact ? 6 : 8),
+        clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(isCompact ? 12 : 14),
-          border: Border.all(color: const Color(0x12122612)),
+          borderRadius: BorderRadius.circular(16),
           boxShadow: const [BoxShadow(color: Color(0x0D122612), blurRadius: 4, offset: Offset(0, 1))],
         ),
         child: Column(
@@ -39,8 +38,10 @@ class ProductCard extends StatelessWidget {
               Container(
                 height: imageHeight,
                 width: double.infinity,
-                decoration: BoxDecoration(color: product.color, borderRadius: BorderRadius.circular(isCompact ? 8 : 10)),
-                child: Icon(product.icon, size: imageHeight * 0.42, color: accent.withOpacity(.55)),
+                color: product.color,
+                child: Center(
+                  child: Icon(product.icon, size: imageHeight * 0.44, color: accent.withOpacity(.55)),
+                ),
               ),
               if (product.off > 10)
                 Positioned(
@@ -61,50 +62,58 @@ class ProductCard extends StatelessWidget {
                   ),
                 ),
             ]),
-            SizedBox(height: isCompact ? 4 : 8),
-            SizedBox(
-              height: isCompact ? 26 : 34,
-              child: Text(
-                product.name,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: isCompact ? 10.5 : 12, fontWeight: FontWeight.w500, color: const Color(0xFF12261C), height: 1.15),
-              ),
-            ),
-            const SizedBox(height: 2),
-            SizedBox(
-              height: isCompact ? 13 : 15,
-              child: Text(
-                product.unit,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: isCompact ? 9.0 : 10.5, color: const Color(0x8812261C)),
-              ),
-            ),
-            SizedBox(height: isCompact ? 4 : 8),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
+            Padding(
+              padding: EdgeInsets.fromLTRB(isCompact ? 8 : 10, isCompact ? 6 : 8, isCompact ? 8 : 10, isCompact ? 8 : 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    height: isCompact ? 28 : 34,
+                    child: Text(
+                      product.name,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: isCompact ? 11.0 : 12.0, fontWeight: FontWeight.w500, color: const Color(0xFF12261C), height: 1.15),
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  SizedBox(
+                    height: isCompact ? 13 : 15,
+                    child: Text(
+                      product.unit,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: isCompact ? 9.0 : 10.5, color: const Color(0x8812261C)),
+                    ),
+                  ),
+                  SizedBox(height: isCompact ? 5 : 8),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('₹${product.price}', style: TextStyle(fontSize: isCompact ? 11.5 : 14, fontWeight: FontWeight.w700, color: const Color(0xFF12261C), height: 1.1), overflow: TextOverflow.ellipsis),
-                      Text('₹${product.mrp}', style: TextStyle(fontSize: isCompact ? 8.5 : 10, color: const Color(0x6B12261C), decoration: TextDecoration.lineThrough, height: 1.1), overflow: TextOverflow.ellipsis),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text('₹${product.price}', style: TextStyle(fontSize: isCompact ? 11.5 : 14, fontWeight: FontWeight.w700, color: const Color(0xFF12261C), height: 1.1), overflow: TextOverflow.ellipsis),
+                            Text('₹${product.mrp}', style: TextStyle(fontSize: isCompact ? 8.5 : 10, color: const Color(0x6B12261C), decoration: TextDecoration.lineThrough, height: 1.1), overflow: TextOverflow.ellipsis),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 2),
+                      SizedBox(
+                        height: isCompact ? 24 : 34,
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: _cta(context, app, hasVariants, qty, accent, tint, compact: isCompact),
+                        ),
+                      ),
                     ],
                   ),
-                ),
-                const SizedBox(width: 2),
-                SizedBox(
-                  height: isCompact ? 24 : 34,
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: _cta(context, app, hasVariants, qty, accent, tint, compact: isCompact),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
