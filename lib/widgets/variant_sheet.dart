@@ -57,7 +57,7 @@ class _VariantSheet extends StatelessWidget {
         if (highlighted)
           Positioned(top: -21, left: 2, child: Container(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3), decoration: BoxDecoration(color: const Color(0xFF0E7A4B), borderRadius: BorderRadius.circular(6)), child: Text('Save ₹' + (v.mrp - v.price).toString(), style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w600)))),
         Row(children: [
-          Container(width: 48, height: 48, decoration: BoxDecoration(color: p.color, borderRadius: BorderRadius.circular(10)), child: Icon(p.icon, color: app.accent.withOpacity(.5))),
+          Container(width: 48, height: 48, decoration: BoxDecoration(color: p.color, borderRadius: BorderRadius.circular(10)), child: Icon(p.icon, color: app.accent.withValues(alpha: .5))),
           const SizedBox(width: 12),
           Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(v.label, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: Color(0xFF12261C))),

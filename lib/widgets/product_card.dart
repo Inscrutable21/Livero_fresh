@@ -19,6 +19,25 @@ class ProductCard extends StatelessWidget {
     final app = context.read<AppState>();
     final hasVariants = product.variants != null && product.variants!.length > 1;
     final isCompact = width < 145;
+    String displayUnit = product.unit;
+    int displayPrice = product.price;
+    int displayMrp = product.mrp;
+
+    if (hasVariants && qty > 0) {
+      final inCartIndices = <int>[];
+      for (var i = 0; i < product.variants!.length; i++) {
+        if ((app.cart['${product.id}::$i'] ?? 0) > 0) {
+          inCartIndices.add(i);
+        }
+      }
+      if (inCartIndices.length == 1) {
+        final v = product.variants![inCartIndices.first];
+        displayUnit = v.label;
+        displayPrice = v.price;
+        displayMrp = v.mrp;
+      }
+    }
+
     return GestureDetector(
       onTap: () => app.openProduct(product.id),
       child: Container(
@@ -40,7 +59,7 @@ class ProductCard extends StatelessWidget {
                 width: double.infinity,
                 color: product.color,
                 child: Center(
-                  child: Icon(product.icon, size: imageHeight * 0.44, color: accent.withOpacity(.55)),
+                  child: Icon(product.icon, size: imageHeight * 0.44, color: accent.withValues(alpha: .55)),
                 ),
               ),
               if (product.off > 10)
@@ -81,7 +100,7 @@ class ProductCard extends StatelessWidget {
                   SizedBox(
                     height: isCompact ? 13 : 15,
                     child: Text(
-                      product.unit,
+                      displayUnit,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(fontSize: isCompact ? 9.0 : 10.5, color: const Color(0x8812261C)),
@@ -97,8 +116,8 @@ class ProductCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text('₹${product.price}', style: TextStyle(fontSize: isCompact ? 11.5 : 14, fontWeight: FontWeight.w700, color: const Color(0xFF12261C), height: 1.1), overflow: TextOverflow.ellipsis),
-                            Text('₹${product.mrp}', style: TextStyle(fontSize: isCompact ? 8.5 : 10, color: const Color(0x6B12261C), decoration: TextDecoration.lineThrough, height: 1.1), overflow: TextOverflow.ellipsis),
+                            Text('₹$displayPrice', style: TextStyle(fontSize: isCompact ? 11.5 : 14, fontWeight: FontWeight.w700, color: const Color(0xFF12261C), height: 1.1), overflow: TextOverflow.ellipsis),
+                            Text('₹$displayMrp', style: TextStyle(fontSize: isCompact ? 8.5 : 10, color: const Color(0x6B12261C), decoration: TextDecoration.lineThrough, height: 1.1), overflow: TextOverflow.ellipsis),
                           ],
                         ),
                       ),
@@ -124,16 +143,52 @@ class ProductCard extends StatelessWidget {
   Widget _cta(BuildContext context, AppState app, bool hasVariants, int qty, Color accent, Color tint, {bool compact = false}) {
     if (hasVariants) {
       if (qty > 0) {
-        return GestureDetector(
-          onTap: () => showVariantSheet(context, product.id),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 350),
-            curve: Curves.easeInOutCubic,
-            height: compact ? 22 : 26,
-            padding: EdgeInsets.symmetric(horizontal: compact ? 5 : 6),
-            decoration: BoxDecoration(color: accent, borderRadius: BorderRadius.circular(compact ? 6 : 8)),
-            alignment: Alignment.center,
-            child: Text(qty.toString(), style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: compact ? 10.5 : 12)),
+        return AnimatedContainer(
+          duration: const Duration(milliseconds: 350),
+          curve: Curves.easeInOutCubic,
+          height: compact ? 22 : 26,
+          decoration: BoxDecoration(color: accent, borderRadius: BorderRadius.circular(compact ? 6 : 8)),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _stepBtn(
+                '−',
+                () {
+                  // If single variant in cart, decrement it. If multiple, show sheet to choose.
+                  final inCartKeys = <String>[];
+                  for (var i = 0; i < product.variants!.length; i++) {
+                    final k = '${product.id}::$i';
+                    if ((app.cart[k] ?? 0) > 0) inCartKeys.add(k);
+                  }
+                  if (inCartKeys.length == 1) {
+                    app.bump(inCartKeys.first, -1);
+                  } else {
+                    showVariantSheet(context, product.id);
+                  }
+                },
+                compact: compact,
+              ),
+              GestureDetector(
+                onTap: () => showVariantSheet(context, product.id),
+                child: Container(
+                  width: compact ? 14 : 20,
+                  alignment: Alignment.center,
+                  child: Text(
+                    qty.toString(),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: compact ? 10.5 : 12,
+                    ),
+                  ),
+                ),
+              ),
+              _stepBtn(
+                '+',
+                () => showVariantSheet(context, product.id),
+                compact: compact,
+              ),
+            ],
           ),
         );
       }
@@ -144,22 +199,30 @@ class ProductCard extends StatelessWidget {
           curve: Curves.easeInOutCubic,
           height: compact ? 24 : 34,
           width: compact ? 42 : 64,
-          decoration: BoxDecoration(border: Border.all(color: accent.withOpacity(.4), width: 1.3), borderRadius: BorderRadius.circular(compact ? 6 : 8), color: tint.withOpacity(.25)),
+          decoration: BoxDecoration(
+            border: Border.all(color: accent.withValues(alpha: .4), width: 1.3),
+            borderRadius: BorderRadius.circular(compact ? 6 : 8),
+            color: tint.withValues(alpha: .25),
+          ),
           alignment: Alignment.center,
-          child: Column(mainAxisSize: MainAxisSize.min, mainAxisAlignment: MainAxisAlignment.center, children: [
-            AnimatedDefaultTextStyle(
-              duration: const Duration(milliseconds: 350),
-              curve: Curves.easeInOutCubic,
-              style: TextStyle(color: accent, fontWeight: FontWeight.w700, fontSize: compact ? 9.5 : 12, height: 1.0),
-              child: const Text('ADD'),
-            ),
-            AnimatedDefaultTextStyle(
-              duration: const Duration(milliseconds: 350),
-              curve: Curves.easeInOutCubic,
-              style: TextStyle(color: accent.withOpacity(.75), fontSize: compact ? 6.5 : 8, height: 1.0),
-              child: Text(compact ? '${product.variants!.length} opts' : '${product.variants!.length} options'),
-            ),
-          ]),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AnimatedDefaultTextStyle(
+                duration: const Duration(milliseconds: 350),
+                curve: Curves.easeInOutCubic,
+                style: TextStyle(color: accent, fontWeight: FontWeight.w700, fontSize: compact ? 9.5 : 12, height: 1.0),
+                child: const Text('ADD'),
+              ),
+              AnimatedDefaultTextStyle(
+                duration: const Duration(milliseconds: 350),
+                curve: Curves.easeInOutCubic,
+                style: TextStyle(color: accent.withValues(alpha: .75), fontSize: compact ? 6.5 : 8, height: 1.0),
+                child: Text(compact ? '${product.variants!.length} opts' : '${product.variants!.length} options'),
+              ),
+            ],
+          ),
         ),
       );
     }
