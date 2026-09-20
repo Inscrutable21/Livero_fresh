@@ -47,19 +47,46 @@ class BottomNav extends StatelessWidget {
     child: GestureDetector(
       onTap: () {},
       child: Align(
-        alignment: Alignment.bottomCenter,
+        alignment: Alignment.center,
         child: Container(
-          width: 84, height: 88, margin: const EdgeInsets.only(bottom: 0),
-          transform: Matrix4.translationValues(0, -26, 0),
+          width: 67.2,
+          height: 50,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(22),
-            boxShadow: const [BoxShadow(color: Color(0x38122612), blurRadius: 20, offset: Offset(0, 8))],
-            gradient: const LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Color(0xFF8FCBEA), Color(0xFFCDE9F2), Color(0xFFBFE0A8), Color(0xFF7FB25C)], stops: [0, 0.38, 0.55, 1]),
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: const [BoxShadow(color: Color(0x24122612), blurRadius: 8, offset: Offset(0, 2))],
+            gradient: const LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Color(0xFF8FCBEA), Color(0xFFCDE9F2), Color(0xFFBFE0A8), Color(0xFF7FB25C)],
+              stops: [0, 0.38, 0.55, 1],
+            ),
           ),
-          child: Stack(alignment: Alignment.center, children: [
-            Positioned(top: 12, child: Container(width: 26, height: 22, decoration: BoxDecoration(color: Colors.white.withOpacity(.92), borderRadius: BorderRadius.circular(6)), child: const Icon(Icons.play_arrow, size: 14, color: Color(0xFF2A5AAE)))),
-            Positioned(bottom: 8, child: Text('Finds', style: TextStyle(fontStyle: FontStyle.italic, fontWeight: FontWeight.w700, fontSize: 14, color: Colors.white, shadows: [Shadow(color: Colors.black.withOpacity(.25), blurRadius: 4, offset: const Offset(0, 1))]))),
-          ]),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 24,
+                height: 18,
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.92),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: const Icon(Icons.play_arrow, size: 14, color: Color(0xFF2A5AAE)),
+              ),
+              const SizedBox(height: 3),
+              Text(
+                'Finds',
+                style: TextStyle(
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 11,
+                  color: Colors.white,
+                  shadows: [Shadow(color: Colors.black.withValues(alpha: 0.25), blurRadius: 4, offset: const Offset(0, 1))],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     ),
