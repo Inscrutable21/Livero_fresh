@@ -385,17 +385,20 @@ class _HomeHeaderDelegate extends SliverPersistentHeaderDelegate {
                             ),
                           ),
                           const SizedBox(width: 8),
-                          Container(
-                            width: 38,
-                            height: 38,
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(
-                              Icons.person_outline,
-                              size: 19,
-                              color: Color(0xFF12261C),
+                          GestureDetector(
+                            onTap: () => app.setScreen(Screen.account),
+                            child: Container(
+                              width: 38,
+                              height: 38,
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                Icons.person_outline,
+                                size: 19,
+                                color: Color(0xFF12261C),
+                              ),
                             ),
                           ),
                         ],
