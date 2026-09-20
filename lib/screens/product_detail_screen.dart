@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models.dart';
 import '../state/app_state.dart';
-import '../widgets/product_card.dart';
+import '../widgets/view_basket_bar.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   const ProductDetailScreen({super.key});
@@ -125,6 +125,7 @@ class ProductDetailScreen extends StatelessWidget {
             )),
           ])),
         )),
+        ViewBasketBar(bottom: 86 + MediaQuery.paddingOf(context).bottom),
       ]),
     );
   }

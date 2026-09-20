@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../state/app_state.dart';
 import '../widgets/bottom_nav.dart';
 import '../widgets/location_sheet.dart';
+import '../widgets/view_basket_bar.dart';
 
 class AccountScreen extends StatelessWidget {
   const AccountScreen({super.key});
@@ -10,6 +11,13 @@ class AccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final app = context.watch<AppState>();
+    final bottomInset = MediaQuery.paddingOf(context).bottom;
+    final navVisible = context.select<AppState, bool>((s) => s.navVisible);
+    final cartCount = context.select<AppState, int>((s) => s.cartCount);
+    final basketBottom = navVisible
+        ? (bottomInset > 0 ? bottomInset + 84 : 96.0)
+        : (bottomInset > 0 ? bottomInset + 12 : 16.0);
+
     return Container(
       color: const Color(0xFFF7F8F5),
       child: Column(children: [
@@ -27,7 +35,7 @@ class AccountScreen extends StatelessWidget {
           child: Stack(
             children: [
               BottomNavScrollListener(
-                child: ListView(padding: EdgeInsets.fromLTRB(14, 16, 14, 104 + MediaQuery.paddingOf(context).bottom), children: [
+                child: ListView(padding: EdgeInsets.fromLTRB(14, 16, 14, 104 + bottomInset + (cartCount > 0 ? 68 : 0)), children: [
           Container(padding: const EdgeInsets.all(16), decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), boxShadow: const [BoxShadow(color: Color(0x0D122612), blurRadius: 8, offset: Offset(0, 2))]), child: Row(children: [
             Container(width: 54, height: 54, decoration: BoxDecoration(shape: BoxShape.circle, gradient: LinearGradient(colors: [app.accent, const Color(0xFF0A5C39)])), alignment: Alignment.center, child: const Text('RM', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: Colors.white))),
             const SizedBox(width: 14),
@@ -69,6 +77,7 @@ class AccountScreen extends StatelessWidget {
           const Text('Livero Fresh · v1.0.0', textAlign: TextAlign.center, style: TextStyle(fontSize: 10.5, color: Color(0x5912261C))),
                 ]),
               ),
+              ViewBasketBar(bottom: basketBottom),
               const Positioned(
                 left: 0,
                 right: 0,

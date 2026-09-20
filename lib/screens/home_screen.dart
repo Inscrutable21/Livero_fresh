@@ -7,6 +7,7 @@ import '../theme.dart';
 import '../widgets/product_card.dart';
 import '../widgets/bottom_nav.dart';
 import '../widgets/location_sheet.dart';
+import '../widgets/view_basket_bar.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -36,6 +37,12 @@ class HomeScreen extends StatelessWidget {
     final currentTab = context.select<AppState, String>((s) => s.tab);
     final app = context.read<AppState>();
     final topPadding = MediaQuery.paddingOf(context).top;
+    final bottomInset = MediaQuery.paddingOf(context).bottom;
+    final navVisible = context.select<AppState, bool>((s) => s.navVisible);
+    final cartCount = context.select<AppState, int>((s) => s.cartCount);
+    final basketBottom = navVisible
+        ? (bottomInset > 0 ? bottomInset + 84 : 96.0)
+        : (bottomInset > 0 ? bottomInset + 12 : 16.0);
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 350),
@@ -59,7 +66,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 SliverToBoxAdapter(
                   child: Padding(
-                    padding: EdgeInsets.only(bottom: 104 + MediaQuery.paddingOf(context).bottom),
+                    padding: EdgeInsets.only(bottom: 104 + bottomInset + (cartCount > 0 ? 68 : 0)),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -201,6 +208,7 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
+          ViewBasketBar(bottom: basketBottom),
           const Positioned(
             left: 0,
             right: 0,
