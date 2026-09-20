@@ -233,12 +233,12 @@ class HomeScreen extends StatelessWidget {
   ])));
 
   static Widget _perk(String big, String small, String text) => Expanded(child: Row(children: [
-    Container(constraints: const BoxConstraints(minWidth: 44, minHeight: 44), padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 3), decoration: const BoxDecoration(color: Color(0xFFFFE9A8), shape: BoxShape.circle), alignment: Alignment.center, child: Column(mainAxisSize: MainAxisSize.min, children: [
-      Text(big, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: Color(0xFF12261C), height: 1.1)),
-      Text(small, style: const TextStyle(fontSize: 7.5, fontWeight: FontWeight.w600, color: Color(0x9912261C), height: 1.1)),
+    Container(constraints: const BoxConstraints(minWidth: 36, minHeight: 36), padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2), decoration: const BoxDecoration(color: Color(0xFFFFE9A8), shape: BoxShape.circle), alignment: Alignment.center, child: Column(mainAxisSize: MainAxisSize.min, children: [
+      Text(big, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: Color(0xFF12261C), height: 1.1)),
+      Text(small, style: const TextStyle(fontSize: 7, fontWeight: FontWeight.w600, color: Color(0x9912261C), height: 1.1)),
     ])),
-    const SizedBox(width: 8),
-    Expanded(child: Text(text, style: const TextStyle(fontSize: 9.5, fontWeight: FontWeight.w600, color: Colors.white))),
+    const SizedBox(width: 5),
+    Expanded(child: Text(text, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 9, fontWeight: FontWeight.w600, color: Colors.white))),
   ]));
 
   static Widget _promoBanner(String title, String cta, Gradient gradient, Color titleColor, Color ctaColor) => Container(
@@ -294,7 +294,7 @@ class _HomeHeaderDelegate extends SliverPersistentHeaderDelegate {
         boxShadow: isPinned || overlapsContent
             ? [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.07),
+                  color: Colors.black.withValues(alpha: 0.07),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),
@@ -354,7 +354,7 @@ class _HomeHeaderDelegate extends SliverPersistentHeaderDelegate {
                                           style: TextStyle(
                                             fontSize: 10.5,
                                             letterSpacing: .5,
-                                            color: Colors.black.withOpacity(.55),
+                                            color: Colors.black.withValues(alpha: .55),
                                           ),
                                         ),
                                         Row(
@@ -492,7 +492,7 @@ class _HomeHeaderDelegate extends SliverPersistentHeaderDelegate {
                               boxShadow: on
                                   ? [
                                       BoxShadow(
-                                        color: accent.withOpacity(0.18),
+                                        color: accent.withValues(alpha: 0.18),
                                         blurRadius: 8,
                                         offset: const Offset(0, 3),
                                       ),

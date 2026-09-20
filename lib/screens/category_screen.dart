@@ -43,7 +43,7 @@ class CategoryScreen extends StatelessWidget {
                 onTap: () => app.setSub(name),
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 9),
-                  decoration: BoxDecoration(color: on ? app.theme.tint.withOpacity(.4) : Colors.transparent, border: Border(left: BorderSide(color: on ? app.accent : Colors.transparent, width: 3))),
+                  decoration: BoxDecoration(color: on ? app.theme.tint.withValues(alpha: .4) : Colors.transparent, border: Border(left: BorderSide(color: on ? app.accent : Colors.transparent, width: 3))),
                   child: Column(children: [
                     Container(width: 44, height: 44, decoration: BoxDecoration(color: on ? app.theme.tint : const Color(0xFFF4F5F2), borderRadius: BorderRadius.circular(12)), child: Icon(icon, size: 20, color: on ? app.accent : const Color(0xFF4C6157))),
                     const SizedBox(height: 5),

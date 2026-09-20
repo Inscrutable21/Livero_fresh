@@ -73,7 +73,11 @@ class AppState extends ChangeNotifier {
   void add(String id) { cart[id] = (cart[id] ?? 0) + 1; notifyListeners(); }
   void bump(String id, int d) {
     final n = (cart[id] ?? 0) + d;
-    if (n <= 0) cart.remove(id); else cart[id] = n;
+    if (n <= 0) {
+      cart.remove(id);
+    } else {
+      cart[id] = n;
+    }
     notifyListeners();
   }
 
@@ -94,7 +98,7 @@ class AppState extends ChangeNotifier {
     final p = byId(id);
     if (p.variants != null && p.variants!.length > 1) {
       int total = 0;
-      for (var i = 0; i < p.variants!.length; i++) { total += cart[id + '::' + i.toString()] ?? 0; }
+      for (var i = 0; i < p.variants!.length; i++) { total += cart['$id::$i'] ?? 0; }
       return total;
     }
     return cart[id] ?? 0;
@@ -114,7 +118,7 @@ class AppState extends ChangeNotifier {
   void setNewSub(String v) { newSub = v; notifyListeners(); }
   void saveNewAddress() {
     if (newLine.trim().isEmpty) return;
-    final id = 'custom' + DateTime.now().millisecondsSinceEpoch.toString();
+    final id = 'custom${DateTime.now().millisecondsSinceEpoch}';
     customAddresses.add(Address(id: id, tag: newTag.toUpperCase(), line: newLine.trim(), sub: newSub.trim().isEmpty ? 'Added manually' : newSub.trim()));
     addressId = id; addingAddress = false; locationOpen = false;
     notifyListeners();

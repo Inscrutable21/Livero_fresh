@@ -42,7 +42,7 @@ class _VariantSheet extends StatelessWidget {
 
   Widget _row(BuildContext context, AppState app, Product p, int i) {
     final v = p.variants![i];
-    final key = p.id + '::' + i.toString();
+    final key = '${p.id}::$i';
     final qty = app.cart[key] ?? 0;
     final highlighted = i == 0;
     return Container(
@@ -55,7 +55,7 @@ class _VariantSheet extends StatelessWidget {
       ),
       child: Stack(clipBehavior: Clip.none, children: [
         if (highlighted)
-          Positioned(top: -21, left: 2, child: Container(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3), decoration: BoxDecoration(color: const Color(0xFF0E7A4B), borderRadius: BorderRadius.circular(6)), child: Text('Save ₹' + (v.mrp - v.price).toString(), style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w600)))),
+          Positioned(top: -21, left: 2, child: Container(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3), decoration: BoxDecoration(color: const Color(0xFF0E7A4B), borderRadius: BorderRadius.circular(6)), child: Text('Save ₹${v.mrp - v.price}', style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w600)))),
         Row(children: [
           Container(width: 48, height: 48, decoration: BoxDecoration(color: p.color, borderRadius: BorderRadius.circular(10)), child: Icon(p.icon, color: app.accent.withValues(alpha: .5))),
           const SizedBox(width: 12),
@@ -63,9 +63,9 @@ class _VariantSheet extends StatelessWidget {
             Text(v.label, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: Color(0xFF12261C))),
             const SizedBox(height: 3),
             Row(children: [
-              Text('₹' + v.price.toString(), style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Color(0xFF12261C))),
+              Text('₹${v.price}', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Color(0xFF12261C))),
               const SizedBox(width: 6),
-              Text('₹' + v.mrp.toString(), style: const TextStyle(fontSize: 11, color: Color(0x6B12261C), decoration: TextDecoration.lineThrough)),
+              Text('₹${v.mrp}', style: const TextStyle(fontSize: 11, color: Color(0x6B12261C), decoration: TextDecoration.lineThrough)),
             ]),
           ])),
           Container(

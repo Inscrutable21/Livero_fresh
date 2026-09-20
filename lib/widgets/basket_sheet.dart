@@ -13,8 +13,8 @@ void showBasketSheet(BuildContext context) {
 }
 
 
-class _BasketSheet extends StatelessWidget {
-  const _BasketSheet();
+class BasketSheet extends StatelessWidget {
+  const BasketSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -313,7 +313,7 @@ class _BasketSheet extends StatelessWidget {
               color: p.color,
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Icon(p.icon, size: 22, color: app.accent.withOpacity(.6)),
+            child: Icon(p.icon, size: 22, color: app.accent.withValues(alpha: .6)),
           ),
           const SizedBox(width: 12),
           Expanded(

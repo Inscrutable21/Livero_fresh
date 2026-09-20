@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../state/app_state.dart';
 
 void showLocationSheet(BuildContext context) {
+  final app = context.read<AppState>();
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -11,7 +12,7 @@ void showLocationSheet(BuildContext context) {
       padding: EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom),
       child: const _LocationSheet(),
     ),
-  ).whenComplete(() => context.read<AppState>().closeLocation());
+  ).whenComplete(() => app.closeLocation());
 }
 
 class _LocationSheet extends StatefulWidget {
@@ -70,7 +71,7 @@ class _LocationSheetState extends State<_LocationSheet> {
         onTap: app.useGps,
         child: Container(
           padding: const EdgeInsets.all(12), margin: const EdgeInsets.only(bottom: 16),
-          decoration: BoxDecoration(color: app.theme.tint.withOpacity(.45), borderRadius: BorderRadius.circular(14)),
+          decoration: BoxDecoration(color: app.theme.tint.withValues(alpha: .45), borderRadius: BorderRadius.circular(14)),
           child: Row(children: [
             Container(width: 38, height: 38, decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle), child: Icon(Icons.my_location, size: 19, color: app.accent)),
             const SizedBox(width: 12),
@@ -82,7 +83,7 @@ class _LocationSheetState extends State<_LocationSheet> {
           ]),
         ),
       ),
-      Padding(padding: const EdgeInsets.fromLTRB(4, 0, 4, 8), child: Text('SAVED ADDRESSES', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, letterSpacing: .5, color: Colors.black.withOpacity(.45)))),
+      Padding(padding: const EdgeInsets.fromLTRB(4, 0, 4, 8), child: Text('SAVED ADDRESSES', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, letterSpacing: .5, color: Colors.black.withValues(alpha: .45)))),
       for (final a in app.allAddresses) _addrRow(context, app, a),
       GestureDetector(
         onTap: app.openAddForm,
@@ -141,7 +142,7 @@ class _LocationSheetState extends State<_LocationSheet> {
         const SizedBox(width: 10),
         Expanded(flex: 2, child: GestureDetector(
           onTap: canSave ? () { app.saveNewAddress(); Navigator.pop(context); } : null,
-          child: Container(height: 46, alignment: Alignment.center, decoration: BoxDecoration(color: app.accent.withOpacity(canSave ? 1 : .45), borderRadius: BorderRadius.circular(12)), child: const Text('Save address', style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600, color: Colors.white))),
+          child: Container(height: 46, alignment: Alignment.center, decoration: BoxDecoration(color: app.accent.withValues(alpha: canSave ? 1 : .45), borderRadius: BorderRadius.circular(12)), child: const Text('Save address', style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600, color: Colors.white))),
         )),
       ]),
     ]);

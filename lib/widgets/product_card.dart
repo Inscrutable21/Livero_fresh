@@ -246,7 +246,7 @@ class ProductCard extends StatelessWidget {
         curve: Curves.easeInOutCubic,
         height: compact ? 22 : 26,
         width: compact ? 36 : 52,
-        decoration: BoxDecoration(border: Border.all(color: accent.withOpacity(.4), width: 1.3), borderRadius: BorderRadius.circular(compact ? 6 : 8), color: tint.withOpacity(.25)),
+        decoration: BoxDecoration(border: Border.all(color: accent.withValues(alpha: .4), width: 1.3), borderRadius: BorderRadius.circular(compact ? 6 : 8), color: tint.withValues(alpha: .25)),
         alignment: Alignment.center,
         child: AnimatedDefaultTextStyle(
           duration: const Duration(milliseconds: 350),
