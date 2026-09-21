@@ -24,6 +24,7 @@ class AppState extends ChangeNotifier {
   bool locationOpen = false;
   String addressId = 'home';
   bool addingAddress = false;
+  bool isAddressAdded = false;
   String newTag = 'Home';
   String newLine = '';
   String newSub = '';
@@ -109,8 +110,10 @@ class AppState extends ChangeNotifier {
 
   void openLocation() { locationOpen = true; notifyListeners(); }
   void closeLocation() { locationOpen = false; addingAddress = false; notifyListeners(); }
-  void useGps() { addressId = 'gps'; locationOpen = false; notifyListeners(); }
-  void selectAddress(String id) { addressId = id; locationOpen = false; notifyListeners(); }
+  void setAddressAdded(bool value) { isAddressAdded = value; notifyListeners(); }
+  void clearCart() { cart.clear(); isAddressAdded = false; notifyListeners(); }
+  void useGps() { addressId = 'gps'; locationOpen = false; isAddressAdded = true; notifyListeners(); }
+  void selectAddress(String id) { addressId = id; locationOpen = false; isAddressAdded = true; notifyListeners(); }
   void openAddForm() { addingAddress = true; newTag = 'Home'; newLine = ''; newSub = ''; notifyListeners(); }
   void cancelAddForm() { addingAddress = false; notifyListeners(); }
   void setNewTag(String t) { newTag = t; notifyListeners(); }
@@ -120,7 +123,7 @@ class AppState extends ChangeNotifier {
     if (newLine.trim().isEmpty) return;
     final id = 'custom${DateTime.now().millisecondsSinceEpoch}';
     customAddresses.add(Address(id: id, tag: newTag.toUpperCase(), line: newLine.trim(), sub: newSub.trim().isEmpty ? 'Added manually' : newSub.trim()));
-    addressId = id; addingAddress = false; locationOpen = false;
+    addressId = id; addingAddress = false; locationOpen = false; isAddressAdded = true;
     notifyListeners();
   }
 }

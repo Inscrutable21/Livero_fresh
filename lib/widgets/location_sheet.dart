@@ -68,7 +68,10 @@ class _LocationSheetState extends State<_LocationSheet> {
   Widget _list(BuildContext context, AppState app) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       GestureDetector(
-        onTap: app.useGps,
+        onTap: () {
+          app.useGps();
+          Navigator.pop(context);
+        },
         child: Container(
           padding: const EdgeInsets.all(12), margin: const EdgeInsets.only(bottom: 16),
           decoration: BoxDecoration(color: app.theme.tint.withValues(alpha: .45), borderRadius: BorderRadius.circular(14)),
@@ -102,7 +105,10 @@ class _LocationSheetState extends State<_LocationSheet> {
   Widget _addrRow(BuildContext context, AppState app, Address a) {
     final on = app.addressId == a.id;
     return GestureDetector(
-      onTap: () => app.selectAddress(a.id),
+      onTap: () {
+        app.selectAddress(a.id);
+        Navigator.pop(context);
+      },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 4),
         decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Color(0x12122612)))),

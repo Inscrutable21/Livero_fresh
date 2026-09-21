@@ -59,6 +59,93 @@ class _CartScreenState extends State<CartScreen> {
     });
   }
 
+  void _placeOrder() {
+    final app = context.read<AppState>();
+    final grandTotal = app.cartTotal + (app.cartTotal >= 399 ? 0 : 9) + 12;
+    final addressLine = app.selectedAddress.line;
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        contentPadding: const EdgeInsets.fromLTRB(24, 28, 24, 20),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 68,
+              height: 68,
+              decoration: const BoxDecoration(
+                color: Color(0xFFE8F6EE),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.check_circle_rounded,
+                color: Color(0xFF0F8A4B),
+                size: 44,
+              ),
+            ),
+            const SizedBox(height: 18),
+            Text(
+              'Order Placed!',
+              style: GoogleFonts.playfairDisplay(
+                fontSize: 24,
+                fontWeight: FontWeight.w700,
+                color: const Color(0xFF1E221E),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Your order of ₹$grandTotal has been placed successfully.',
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 13.5,
+                color: Color(0xFF5F6D64),
+              ),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              'Delivering to $addressLine in 9 mins ⚡',
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF0F8A4B),
+              ),
+            ),
+            const SizedBox(height: 22),
+            SizedBox(
+              width: double.infinity,
+              height: 48,
+              child: ElevatedButton(
+                onPressed: () {
+                  app.clearCart();
+                  Navigator.pop(ctx);
+                  Navigator.pop(context);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF08482A),
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                ),
+                child: const Text(
+                  'Back to Home',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final app = context.watch<AppState>();
@@ -223,9 +310,12 @@ class _CartScreenState extends State<CartScreen> {
             child: CartBottomBar(
               walletBalance: _walletBalance,
               grandTotal: grandTotal,
+              isAddressAdded: app.isAddressAdded,
+              addressLine: app.selectedAddress.line,
               onAddBalance: _addBalance,
               onViewBill: _scrollToBill,
               onAddAddress: () => showLocationSheet(context),
+              onPlaceOrder: _placeOrder,
             ),
           ),
         ],
