@@ -212,23 +212,49 @@ class HomeScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 14),
-          Padding(padding: const EdgeInsets.symmetric(horizontal: 16), child: AnimatedContainer(
-            duration: const Duration(milliseconds: 350),
-            curve: Curves.easeInOutCubic,
-            padding: const EdgeInsets.fromLTRB(12, 13, 12, 14),
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), gradient: LinearGradient(colors: theme.perksGradient), boxShadow: const [BoxShadow(color: Color(0x28122612), blurRadius: 18, offset: Offset(0, 6))]),
-            child: Column(children: [
-              const Text('Your first order comes with perks', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 12.5)),
-              const SizedBox(height: 12),
-              Row(children: [
-                _perk('₹50', 'OFF', 'on orders over ₹299'),
-                _perk('₹150', 'OFF', 'on orders over ₹399'),
-                _perk('FREE', 'DELIV', 'on first 4 orders'),
-              ]),
-            ]),
-          )),
-          const SizedBox(height: 14),
-          _categoryBanner(context, app, currentTab),
+                        if (currentTab == 'All') ...[
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 350),
+                              curve: Curves.easeInOutCubic,
+                              padding: const EdgeInsets.fromLTRB(12, 13, 12, 14),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16),
+                                gradient: LinearGradient(colors: theme.perksGradient),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Color(0x28122612),
+                                    blurRadius: 18,
+                                    offset: Offset(0, 6),
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                children: [
+                                  const Text(
+                                    'Your first order comes with perks',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12.5,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 12),
+                                  Row(
+                                    children: [
+                                      _perk('₹50', 'OFF', 'on orders over ₹299'),
+                                      _perk('₹150', 'OFF', 'on orders over ₹399'),
+                                      _perk('FREE', 'DELIV', 'on first 4 orders'),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 14),
+                        ],
+                        _categoryBanner(context, app, currentTab),
           const SizedBox(height: 18),
           _sectionHeader('Shop by category', app.accent),
           SizedBox(height: 132, child: ListView.builder(scrollDirection: Axis.horizontal, padding: const EdgeInsets.symmetric(horizontal: 16), itemCount: catDefs.length, itemBuilder: (_, i) {
