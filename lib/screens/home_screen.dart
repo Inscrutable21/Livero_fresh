@@ -391,7 +391,7 @@ class HomeScreen extends StatelessWidget {
         switchOutCurve: Curves.easeInOutCubic,
         child: Container(
           key: ValueKey<String>(currentTab),
-          height: 152,
+          height: 164,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(18),
             gradient: banner.gradient,
@@ -416,7 +416,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(18, 14, 18, 14),
+                padding: const EdgeInsets.fromLTRB(18, 12, 18, 12),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -447,7 +447,7 @@ class HomeScreen extends StatelessWidget {
                         height: 1.08,
                       ),
                     ),
-                    const SizedBox(height: 5),
+                    const SizedBox(height: 4),
                     Text(
                       banner.subtitle,
                       style: TextStyle(
@@ -456,11 +456,11 @@ class HomeScreen extends StatelessWidget {
                         color: banner.textColor.withValues(alpha: 0.72),
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 8),
                     GestureDetector(
                       onTap: () => app.openList(banner.targetCategory),
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
                         decoration: BoxDecoration(
                           color: banner.buttonColor,
                           borderRadius: BorderRadius.circular(100),
