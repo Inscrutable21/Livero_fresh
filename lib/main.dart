@@ -23,7 +23,7 @@ class LiveroApp extends StatelessWidget {
         theme: ThemeData(
           textTheme: GoogleFonts.poppinsTextTheme(),
           fontFamily: GoogleFonts.poppins().fontFamily,
-          scaffoldBackgroundColor: const Color(0xFFEDECE7),
+          scaffoldBackgroundColor: Colors.white,
           useMaterial3: true,
         ),
         home: const RootShell(),

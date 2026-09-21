@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../models.dart';
 import '../state/app_state.dart';
@@ -303,10 +304,18 @@ class HomeScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 14),
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Padding(padding: const EdgeInsets.symmetric(horizontal: 14), child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                const Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text('Best deals for you', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: Color(0xFF12261C))),
-                  SizedBox(height: 3),
-                  Text('Fresh picks, up to 65% off · ends 9 pm', style: TextStyle(fontSize: 10.5, color: Color(0x8012261C))),
+                Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Text(
+                    'Best deals for you',
+                    style: GoogleFonts.playfairDisplay(
+                      fontSize: 19,
+                      fontWeight: FontWeight.w700,
+                      color: const Color(0xFF1E221E),
+                      letterSpacing: -0.3,
+                    ),
+                  ),
+                  const SizedBox(height: 3),
+                  const Text('Fresh picks, up to 65% off · ends 9 pm', style: TextStyle(fontSize: 10.5, color: Color(0x8012261C))),
                 ])),
                 AnimatedDefaultTextStyle(
                   duration: const Duration(milliseconds: 350),
@@ -379,15 +388,36 @@ class HomeScreen extends StatelessWidget {
 
   static Widget _iconBtn(IconData icon) => Container(width: 46, height: 46, decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(13), boxShadow: const [BoxShadow(color: Color(0x12122612), blurRadius: 10, offset: Offset(0, 2))]), child: Icon(icon, size: 18, color: const Color(0xFF12261C)));
 
-  static Widget _sectionHeader(String title, Color accent) => Padding(padding: const EdgeInsets.symmetric(horizontal: 16), child: Padding(padding: const EdgeInsets.only(bottom: 12), child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-    Text(title, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: Color(0xFF12261C))),
-    AnimatedDefaultTextStyle(
-      duration: const Duration(milliseconds: 350),
-      curve: Curves.easeInOutCubic,
-      style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.w600, color: accent),
-      child: const Text('View all'),
+  static Widget _sectionHeader(String title, Color accent) => Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 16),
+    child: Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title,
+            style: GoogleFonts.playfairDisplay(
+              fontSize: 19,
+              fontWeight: FontWeight.w700,
+              color: const Color(0xFF1E221E),
+              letterSpacing: -0.3,
+            ),
+          ),
+          AnimatedDefaultTextStyle(
+            duration: const Duration(milliseconds: 350),
+            curve: Curves.easeInOutCubic,
+            style: TextStyle(
+              fontSize: 11.5,
+              fontWeight: FontWeight.w600,
+              color: accent,
+            ),
+            child: const Text('View all'),
+          ),
+        ],
+      ),
     ),
-  ])));
+  );
 
   static Widget _perk(String big, String small, String text) => Expanded(child: Row(children: [
     Container(constraints: const BoxConstraints(minWidth: 36, minHeight: 36), padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2), decoration: const BoxDecoration(color: Color(0xFFFFE9A8), shape: BoxShape.circle), alignment: Alignment.center, child: Column(mainAxisSize: MainAxisSize.min, children: [
@@ -399,11 +429,25 @@ class HomeScreen extends StatelessWidget {
   ]));
 
   static Widget _promoBanner(String title, String cta, Gradient gradient, Color titleColor, Color ctaColor) => Container(
-    height: 96, padding: const EdgeInsets.all(14), decoration: BoxDecoration(gradient: gradient, borderRadius: BorderRadius.circular(16)),
+    height: 98,
+    padding: const EdgeInsets.all(14),
+    decoration: BoxDecoration(gradient: gradient, borderRadius: BorderRadius.circular(16)),
     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text(title, style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.w700, color: titleColor, height: 1.15)),
+      Text(
+        title,
+        style: GoogleFonts.playfairDisplay(
+          fontSize: 14,
+          fontWeight: FontWeight.w700,
+          color: titleColor,
+          height: 1.15,
+        ),
+      ),
       const Spacer(),
-      Row(mainAxisSize: MainAxisSize.min, children: [Text(cta, style: TextStyle(fontSize: 10.5, fontWeight: FontWeight.w600, color: ctaColor)), const SizedBox(width: 4), Icon(Icons.arrow_forward, size: 11, color: ctaColor)]),
+      Row(mainAxisSize: MainAxisSize.min, children: [
+        Text(cta, style: TextStyle(fontSize: 10.5, fontWeight: FontWeight.w600, color: ctaColor)),
+        const SizedBox(width: 4),
+        Icon(Icons.arrow_forward, size: 11, color: ctaColor),
+      ]),
     ]),
   );
 
@@ -417,7 +461,7 @@ class HomeScreen extends StatelessWidget {
         switchOutCurve: Curves.easeInOutCubic,
         child: Container(
           key: ValueKey<String>(currentTab),
-          height: 164,
+          height: 178,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(18),
             gradient: banner.gradient,
@@ -466,11 +510,12 @@ class HomeScreen extends StatelessWidget {
                     const SizedBox(height: 5),
                     Text(
                       banner.title,
-                      style: TextStyle(
-                        fontSize: 19,
+                      style: GoogleFonts.playfairDisplay(
+                        fontSize: 18.5,
                         fontWeight: FontWeight.w800,
                         color: banner.textColor,
                         height: 1.08,
+                        letterSpacing: -0.2,
                       ),
                     ),
                     const SizedBox(height: 4),
