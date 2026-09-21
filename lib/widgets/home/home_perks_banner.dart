@@ -22,7 +22,7 @@ class HomePerksBanner extends StatelessWidget {
           gradient: LinearGradient(colors: theme.perksGradient),
           boxShadow: const [
             BoxShadow(
-              color: Color(0x28122612),
+            color: Color(0x1A000000),
               blurRadius: 18,
               offset: Offset(0, 6),
             ),

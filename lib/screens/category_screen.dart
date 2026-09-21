@@ -139,10 +139,10 @@ class CategoryScreen extends StatelessWidget {
                             child: Container(
                               padding: const EdgeInsets.symmetric(vertical: 10),
                               decoration: BoxDecoration(
-                                color: on ? const Color(0xFFE8F6EE) : Colors.transparent,
+                                color: on ? app.theme.tint.withValues(alpha: .5) : Colors.transparent,
                                 border: Border(
                                   left: BorderSide(
-                                    color: on ? const Color(0xFF0F5A38) : Colors.transparent,
+                                    color: on ? app.accent : Colors.transparent,
                                     width: 3.5,
                                   ),
                                 ),
@@ -153,14 +153,14 @@ class CategoryScreen extends StatelessWidget {
                                     width: 44,
                                     height: 44,
                                     decoration: BoxDecoration(
-                                      color: on ? Colors.white : const Color(0xFFF7F6F2),
+                                      color: on ? app.theme.tint : const Color(0xFFF7F6F2),
                                       borderRadius: BorderRadius.circular(13),
                                       boxShadow: on
-                                          ? const [
+                                          ? [
                                               BoxShadow(
-                                                color: Color(0x120F5A38),
+                                                color: app.accent.withValues(alpha: 0.18),
                                                 blurRadius: 6,
-                                                offset: Offset(0, 2),
+                                                offset: const Offset(0, 2),
                                               ),
                                             ]
                                           : null,
@@ -168,7 +168,7 @@ class CategoryScreen extends StatelessWidget {
                                     child: Icon(
                                       icon,
                                       size: 20,
-                                      color: on ? const Color(0xFF0F5A38) : const Color(0xFF4C6157),
+                                      color: on ? app.accent : const Color(0xFF4C6157),
                                     ),
                                   ),
                                   const SizedBox(height: 5),
@@ -177,7 +177,7 @@ class CategoryScreen extends StatelessWidget {
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontSize: 10,
-                                      color: on ? const Color(0xFF0F5A38) : const Color(0x991E221E),
+                                      color: on ? app.accent : const Color(0x991E221E),
                                       fontWeight: on ? FontWeight.w700 : FontWeight.w500,
                                     ),
                                   ),
@@ -231,10 +231,10 @@ class CategoryScreen extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 7),
           decoration: BoxDecoration(
-            color: on ? const Color(0xFF0F5A38) : const Color(0xFFF5F6F4),
+            color: on ? app.accent : const Color(0xFFF5F6F4),
             borderRadius: BorderRadius.circular(100),
             border: Border.all(
-              color: on ? const Color(0xFF0F5A38) : const Color(0xFFEDE8DE),
+              color: on ? app.accent : const Color(0xFFEDE8DE),
               width: 1,
             ),
           ),
