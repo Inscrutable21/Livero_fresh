@@ -76,7 +76,7 @@ class ProductCard extends StatelessWidget {
                     ),
                     child: Text(
                       '${product.off}% OFF',
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: isCompact ? 8.0 : 9.5),
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: isCompact ? 9.5 : 10.5),
                     ),
                   ),
                 ),
@@ -88,22 +88,31 @@ class ProductCard extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   SizedBox(
-                    height: isCompact ? 28 : 34,
+                    height: isCompact ? 34 : 38,
                     child: Text(
                       product.name,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: isCompact ? 11.0 : 12.0, fontWeight: FontWeight.w500, color: const Color(0xFF12261C), height: 1.15),
+                      style: TextStyle(
+                        fontSize: isCompact ? 13.0 : 14.0,
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xFF12261C),
+                        height: 1.18,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 2),
                   SizedBox(
-                    height: isCompact ? 13 : 15,
+                    height: isCompact ? 15 : 17,
                     child: Text(
                       displayUnit,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: isCompact ? 9.0 : 10.5, color: const Color(0x8812261C)),
+                      style: TextStyle(
+                        fontSize: isCompact ? 10.5 : 11.5,
+                        fontWeight: FontWeight.w500,
+                        color: const Color(0x9912261C),
+                      ),
                     ),
                   ),
                   SizedBox(height: isCompact ? 5 : 8),
@@ -116,14 +125,33 @@ class ProductCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text('₹$displayPrice', style: TextStyle(fontSize: isCompact ? 11.5 : 14, fontWeight: FontWeight.w700, color: const Color(0xFF12261C), height: 1.1), overflow: TextOverflow.ellipsis),
-                            Text('₹$displayMrp', style: TextStyle(fontSize: isCompact ? 8.5 : 10, color: const Color(0x6B12261C), decoration: TextDecoration.lineThrough, height: 1.1), overflow: TextOverflow.ellipsis),
+                            Text(
+                              '₹$displayPrice',
+                              style: TextStyle(
+                                fontSize: isCompact ? 13.5 : 15.5,
+                                fontWeight: FontWeight.w700,
+                                color: const Color(0xFF12261C),
+                                height: 1.1,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(
+                              '₹$displayMrp',
+                              style: TextStyle(
+                                fontSize: isCompact ? 9.5 : 11.0,
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0x6B12261C),
+                                decoration: TextDecoration.lineThrough,
+                                height: 1.1,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ],
                         ),
                       ),
                       const SizedBox(width: 2),
                       SizedBox(
-                        height: isCompact ? 24 : 34,
+                        height: isCompact ? 26 : 34,
                         child: Align(
                           alignment: Alignment.centerRight,
                           child: _cta(context, app, hasVariants, qty, accent, tint, compact: isCompact),
@@ -146,7 +174,7 @@ class ProductCard extends StatelessWidget {
         return AnimatedContainer(
           duration: const Duration(milliseconds: 350),
           curve: Curves.easeInOutCubic,
-          height: compact ? 22 : 26,
+          height: compact ? 24 : 28,
           decoration: BoxDecoration(color: accent, borderRadius: BorderRadius.circular(compact ? 6 : 8)),
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -171,14 +199,14 @@ class ProductCard extends StatelessWidget {
               GestureDetector(
                 onTap: () => showVariantSheet(context, product.id),
                 child: Container(
-                  width: compact ? 14 : 20,
+                  width: compact ? 16 : 20,
                   alignment: Alignment.center,
                   child: Text(
                     qty.toString(),
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
-                      fontSize: compact ? 10.5 : 12,
+                      fontSize: compact ? 11.5 : 13,
                     ),
                   ),
                 ),
@@ -197,8 +225,8 @@ class ProductCard extends StatelessWidget {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 350),
           curve: Curves.easeInOutCubic,
-          height: compact ? 24 : 34,
-          width: compact ? 42 : 64,
+          height: compact ? 26 : 34,
+          width: compact ? 46 : 64,
           decoration: BoxDecoration(
             border: Border.all(color: accent.withValues(alpha: .4), width: 1.3),
             borderRadius: BorderRadius.circular(compact ? 6 : 8),
@@ -212,13 +240,13 @@ class ProductCard extends StatelessWidget {
               AnimatedDefaultTextStyle(
                 duration: const Duration(milliseconds: 350),
                 curve: Curves.easeInOutCubic,
-                style: TextStyle(color: accent, fontWeight: FontWeight.w700, fontSize: compact ? 9.5 : 12, height: 1.0),
+                style: TextStyle(color: accent, fontWeight: FontWeight.w700, fontSize: compact ? 11.0 : 13.0, height: 1.0),
                 child: const Text('ADD'),
               ),
               AnimatedDefaultTextStyle(
                 duration: const Duration(milliseconds: 350),
                 curve: Curves.easeInOutCubic,
-                style: TextStyle(color: accent.withValues(alpha: .75), fontSize: compact ? 6.5 : 8, height: 1.0),
+                style: TextStyle(color: accent.withValues(alpha: .75), fontSize: compact ? 7.5 : 9.0, fontWeight: FontWeight.w500, height: 1.0),
                 child: Text(compact ? '${product.variants!.length} opts' : '${product.variants!.length} options'),
               ),
             ],
@@ -230,11 +258,11 @@ class ProductCard extends StatelessWidget {
       return AnimatedContainer(
         duration: const Duration(milliseconds: 350),
         curve: Curves.easeInOutCubic,
-        height: compact ? 22 : 26,
+        height: compact ? 24 : 28,
         decoration: BoxDecoration(color: accent, borderRadius: BorderRadius.circular(compact ? 6 : 8)),
         child: Row(mainAxisSize: MainAxisSize.min, children: [
           _stepBtn('−', () => app.bump(product.id, -1), compact: compact),
-          Container(width: compact ? 14 : 20, alignment: Alignment.center, child: Text(qty.toString(), style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: compact ? 10.5 : 12))),
+          Container(width: compact ? 16 : 20, alignment: Alignment.center, child: Text(qty.toString(), style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: compact ? 11.5 : 13))),
           _stepBtn('+', () => app.bump(product.id, 1), compact: compact),
         ]),
       );
@@ -244,14 +272,14 @@ class ProductCard extends StatelessWidget {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 350),
         curve: Curves.easeInOutCubic,
-        height: compact ? 22 : 26,
-        width: compact ? 36 : 52,
+        height: compact ? 24 : 28,
+        width: compact ? 42 : 56,
         decoration: BoxDecoration(border: Border.all(color: accent.withValues(alpha: .4), width: 1.3), borderRadius: BorderRadius.circular(compact ? 6 : 8), color: tint.withValues(alpha: .25)),
         alignment: Alignment.center,
         child: AnimatedDefaultTextStyle(
           duration: const Duration(milliseconds: 350),
           curve: Curves.easeInOutCubic,
-          style: TextStyle(color: accent, fontWeight: FontWeight.w700, fontSize: compact ? 10 : 12, height: 1.0),
+          style: TextStyle(color: accent, fontWeight: FontWeight.w700, fontSize: compact ? 11.5 : 13.0, height: 1.0),
           child: const Text('ADD'),
         ),
       ),
@@ -262,8 +290,8 @@ class ProductCard extends StatelessWidget {
     onTap: onTap,
     child: SizedBox(
       width: compact ? 14 : 20,
-      height: compact ? 22 : 26,
-      child: Center(child: Text(label, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: compact ? 13 : 15))),
+      height: compact ? 24 : 28,
+      child: Center(child: Text(label, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: compact ? 14 : 16))),
     ),
   );
 }

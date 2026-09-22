@@ -55,28 +55,28 @@ class _VariantSheet extends StatelessWidget {
       ),
       child: Stack(clipBehavior: Clip.none, children: [
         if (highlighted)
-          Positioned(top: -21, left: 2, child: Container(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3), decoration: BoxDecoration(color: const Color(0xFF0E7A4B), borderRadius: BorderRadius.circular(6)), child: Text('Save ₹${v.mrp - v.price}', style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w600)))),
+          Positioned(top: -21, left: 2, child: Container(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3), decoration: BoxDecoration(color: const Color(0xFF0E7A4B), borderRadius: BorderRadius.circular(6)), child: Text('Save ₹${v.mrp - v.price}', style: const TextStyle(color: Colors.white, fontSize: 10.5, fontWeight: FontWeight.w600)))),
         Row(children: [
           Container(width: 48, height: 48, decoration: BoxDecoration(color: p.color, borderRadius: BorderRadius.circular(10)), child: Icon(p.icon, color: app.accent.withValues(alpha: .5))),
           const SizedBox(width: 12),
           Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(v.label, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: Color(0xFF12261C))),
+            Text(v.label, style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600, color: Color(0xFF12261C))),
             const SizedBox(height: 3),
             Row(children: [
-              Text('₹${v.price}', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Color(0xFF12261C))),
+              Text('₹${v.price}', style: const TextStyle(fontSize: 15.5, fontWeight: FontWeight.w700, color: Color(0xFF12261C))),
               const SizedBox(width: 6),
-              Text('₹${v.mrp}', style: const TextStyle(fontSize: 11, color: Color(0x6B12261C), decoration: TextDecoration.lineThrough)),
+              Text('₹${v.mrp}', style: const TextStyle(fontSize: 11.5, color: Color(0x6B12261C), decoration: TextDecoration.lineThrough)),
             ]),
           ])),
           Container(
-            width: 78, height: 34,
+            width: 82, height: 34,
             decoration: BoxDecoration(border: Border.all(color: app.accent, width: 1.4), borderRadius: BorderRadius.circular(9)),
             child: qty == 0
-              ? GestureDetector(onTap: () => app.add(key), child: Container(alignment: Alignment.center, child: Text('ADD', style: TextStyle(color: app.accent, fontWeight: FontWeight.w600, fontSize: 12.5))))
+              ? GestureDetector(onTap: () => app.add(key), child: Container(alignment: Alignment.center, child: Text('ADD', style: TextStyle(color: app.accent, fontWeight: FontWeight.w700, fontSize: 13))))
               : Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-                  GestureDetector(onTap: () => app.bump(key, -1), child: Text('−', style: TextStyle(color: app.accent, fontWeight: FontWeight.w600, fontSize: 15))),
-                  Text(qty.toString(), style: TextStyle(color: app.accent, fontWeight: FontWeight.w600, fontSize: 12)),
-                  GestureDetector(onTap: () => app.bump(key, 1), child: Text('+', style: TextStyle(color: app.accent, fontWeight: FontWeight.w600, fontSize: 15))),
+                  GestureDetector(onTap: () => app.bump(key, -1), child: Text('−', style: TextStyle(color: app.accent, fontWeight: FontWeight.w600, fontSize: 16))),
+                  Text(qty.toString(), style: TextStyle(color: app.accent, fontWeight: FontWeight.w600, fontSize: 13)),
+                  GestureDetector(onTap: () => app.bump(key, 1), child: Text('+', style: TextStyle(color: app.accent, fontWeight: FontWeight.w600, fontSize: 16))),
                 ]),
           ),
         ]),

@@ -35,7 +35,7 @@ class HomePerksBanner extends StatelessWidget {
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w600,
-                fontSize: 12.5,
+                fontSize: 14.0,
               ),
             ),
             SizedBox(height: 12),
@@ -70,7 +70,7 @@ class _PerkItem extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
+            constraints: const BoxConstraints(minWidth: 38, minHeight: 38),
             padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
             decoration: const BoxDecoration(
               color: Color(0xFFFFE9A8),
@@ -83,7 +83,7 @@ class _PerkItem extends StatelessWidget {
                 Text(
                   big,
                   style: const TextStyle(
-                    fontSize: 11,
+                    fontSize: 11.5,
                     fontWeight: FontWeight.w700,
                     color: Color(0xFF12261C),
                     height: 1.1,
@@ -92,8 +92,8 @@ class _PerkItem extends StatelessWidget {
                 Text(
                   small,
                   style: const TextStyle(
-                    fontSize: 7,
-                    fontWeight: FontWeight.w600,
+                    fontSize: 8,
+                    fontWeight: FontWeight.w700,
                     color: Color(0x9912261C),
                     height: 1.1,
                   ),
@@ -108,8 +108,8 @@ class _PerkItem extends StatelessWidget {
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
-                fontSize: 9,
-                fontWeight: FontWeight.w600,
+                fontSize: 10,
+                fontWeight: FontWeight.w500,
                 color: Colors.white,
               ),
             ),

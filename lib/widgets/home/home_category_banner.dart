@@ -203,7 +203,7 @@ class HomeCategoryBanner extends StatelessWidget {
                       child: Text(
                         banner.badge,
                         style: TextStyle(
-                          fontSize: 9,
+                          fontSize: 9.5,
                           fontWeight: FontWeight.w700,
                           letterSpacing: 0.6,
                           color: banner.badgeTextColor,
@@ -225,7 +225,7 @@ class HomeCategoryBanner extends StatelessWidget {
                     Text(
                       banner.subtitle,
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 12.5,
                         fontWeight: FontWeight.w600,
                         color: banner.textColor.withValues(alpha: 0.72),
                       ),
@@ -247,7 +247,7 @@ class HomeCategoryBanner extends StatelessWidget {
                               style: TextStyle(
                                 color: banner.buttonTextColor,
                                 fontWeight: FontWeight.w600,
-                                fontSize: 11.5,
+                                fontSize: 12.5,
                               ),
                             ),
                             const SizedBox(width: 5),

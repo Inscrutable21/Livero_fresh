@@ -107,7 +107,8 @@ class HomeHeaderDelegate extends SliverPersistentHeaderDelegate {
                                         Text(
                                           'DELIVERING TO',
                                           style: TextStyle(
-                                            fontSize: 10.5,
+                                            fontSize: 11.0,
+                                            fontWeight: FontWeight.w600,
                                             letterSpacing: .5,
                                             color: Colors.black.withValues(alpha: .55),
                                           ),
@@ -184,7 +185,8 @@ class HomeHeaderDelegate extends SliverPersistentHeaderDelegate {
                                     child: Text(
                                       "Search for 'milk'",
                                       style: TextStyle(
-                                        fontSize: 13.5,
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.w500,
                                         color: Color(0x6B12261C),
                                       ),
                                     ),
@@ -270,9 +272,9 @@ class HomeHeaderDelegate extends SliverPersistentHeaderDelegate {
                             duration: const Duration(milliseconds: 350),
                             curve: Curves.easeInOutCubic,
                             style: TextStyle(
-                              fontSize: 11,
+                              fontSize: 12,
                               color: on ? accent : const Color(0x9912261C),
-                              fontWeight: on ? FontWeight.w600 : FontWeight.w400,
+                              fontWeight: on ? FontWeight.w600 : FontWeight.w500,
                             ),
                             child: Text(name),
                           ),

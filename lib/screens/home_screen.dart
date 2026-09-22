@@ -146,7 +146,7 @@ class HomeScreen extends StatelessWidget {
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
                                             style: const TextStyle(
-                                              fontSize: 11.5,
+                                              fontSize: 13.0,
                                               fontWeight: FontWeight.w600,
                                               color: Color(0xFF12261C),
                                             ),
@@ -237,7 +237,7 @@ class HomeScreen extends StatelessWidget {
                                             const Text(
                                               'Fresh picks, up to 65% off · ends 9 pm',
                                               style: TextStyle(
-                                                fontSize: 10.5,
+                                                fontSize: 12.5,
                                                 color: Color(0x8012261C),
                                               ),
                                             ),
@@ -248,7 +248,7 @@ class HomeScreen extends StatelessWidget {
                                         duration: const Duration(milliseconds: 350),
                                         curve: Curves.easeInOutCubic,
                                         style: TextStyle(
-                                          fontSize: 11.5,
+                                          fontSize: 13.0,
                                           fontWeight: FontWeight.w600,
                                           color: accent,
                                         ),
@@ -310,7 +310,7 @@ class HomeScreen extends StatelessWidget {
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                         style: const TextStyle(
-                                          fontSize: 12,
+                                          fontSize: 13.5,
                                           fontWeight: FontWeight.w600,
                                           color: Color(0xFF12261C),
                                         ),

@@ -20,7 +20,7 @@ class HomeProductRow extends StatelessWidget {
   Widget build(BuildContext context) {
     const double cardWidth = 132.0;
     final double itemExtent = cardWidth + spacing;
-    final double listHeight = imageHeight + 92.0;
+    final double listHeight = imageHeight + 104.0;
 
     return SizedBox(
       height: listHeight,

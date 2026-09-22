@@ -74,7 +74,7 @@ class CategoryScreen extends StatelessWidget {
                                 Text(
                                   '${listProducts.length * 7} items · delivered in 9 mins',
                                   style: const TextStyle(
-                                    fontSize: 11,
+                                    fontSize: 12.5,
                                     color: Color(0x8A1E221E),
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -100,7 +100,7 @@ class CategoryScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 12),
                       SizedBox(
-                        height: 34,
+                        height: 36,
                         child: ListView(
                           scrollDirection: Axis.horizontal,
                           children: [
@@ -176,7 +176,7 @@ class CategoryScreen extends StatelessWidget {
                                     name,
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      fontSize: 10,
+                                      fontSize: 11.5,
                                       color: on ? app.accent : const Color(0x991E221E),
                                       fontWeight: on ? FontWeight.w700 : FontWeight.w500,
                                     ),
@@ -201,7 +201,7 @@ class CategoryScreen extends StatelessWidget {
                           crossAxisCount: 2,
                           mainAxisSpacing: 10,
                           crossAxisSpacing: 10,
-                          childAspectRatio: .72,
+                          childAspectRatio: .67,
                         ),
                         itemCount: listProducts.length,
                         itemBuilder: (_, i) => ProductCard(
@@ -241,7 +241,7 @@ class CategoryScreen extends StatelessWidget {
           child: Text(
             name,
             style: TextStyle(
-              fontSize: 11.5,
+              fontSize: 12.5,
               color: on ? Colors.white : const Color(0xFF1E221E),
               fontWeight: on ? FontWeight.w600 : FontWeight.w500,
             ),

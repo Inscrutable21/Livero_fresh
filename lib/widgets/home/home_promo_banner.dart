@@ -43,7 +43,7 @@ class HomePromoBanner extends StatelessWidget {
             Text(
               title,
               style: GoogleFonts.playfairDisplay(
-                fontSize: 14,
+                fontSize: 14.5,
                 fontWeight: FontWeight.w700,
                 color: titleColor,
                 height: 1.15,
@@ -56,13 +56,13 @@ class HomePromoBanner extends StatelessWidget {
                 Text(
                   cta,
                   style: TextStyle(
-                    fontSize: 10.5,
+                    fontSize: 12.0,
                     fontWeight: FontWeight.w600,
                     color: ctaColor,
                   ),
                 ),
                 const SizedBox(width: 4),
-                Icon(Icons.arrow_forward, size: 11, color: ctaColor),
+                Icon(Icons.arrow_forward, size: 12, color: ctaColor),
               ],
             ),
           ],

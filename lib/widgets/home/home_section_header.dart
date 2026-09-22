@@ -37,7 +37,7 @@ class HomeSectionHeader extends StatelessWidget {
                 duration: const Duration(milliseconds: 350),
                 curve: Curves.easeInOutCubic,
                 style: TextStyle(
-                  fontSize: 11.5,
+                  fontSize: 13.0,
                   fontWeight: FontWeight.w600,
                   color: accent,
                 ),
